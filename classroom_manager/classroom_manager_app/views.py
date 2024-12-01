@@ -13,6 +13,10 @@ def admin_home(request):
     print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
     return render(request, 'admin_home.html')
 
+def staff_home(request):
+    print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+    return render(request, 'staff_home.html')
+
 def logout_view(request):
     logout(request)
     return redirect('/')
@@ -27,6 +31,8 @@ def loginview(request):
             login(request, user)
             if user.is_staff:
                 return redirect('admin_home')
+            if user.user_type == "staff":
+                return redirect('staff_home')
         else:
             messages.info(request, 'invalid credentials')
     return render(request, 'login.html')
@@ -111,3 +117,15 @@ def staff_delete(request, id):
         return redirect('staff_view')
     else:
         return redirect('staff_view')
+
+def standard_view_staff(request):
+    standard = Standard.objects.all()
+    return render(request, 'standard_view_staff.html', {'standard': standard})
+
+def division_view_staff(request):
+    division = Division.objects.all()
+    return render(request, 'division_view_staff.html', {'division': division})
+
+def staff_view_for_staff(request):
+    staff = Staff.objects.all()
+    return render(request, 'staff_view_for_staff.html ', {'staff': staff})

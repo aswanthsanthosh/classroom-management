@@ -1,10 +1,10 @@
-{% extends 'admin_home.html' %}
+{% extends 'staff_home.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
 <div class="col-lg-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Division Details Table</h4>
+                  <h4 class="card-title">Standard Details Table</h4>
 <!--                  <p class="card-description">-->
 <!--                    Add class <code>.table-striped</code>-->
 <!--                  </p>-->
@@ -19,29 +19,13 @@
                           <th>
                              Name
                           </th>
-                          <th>
-                            Standard
-                         </th>
-                         <th>
-                          staff
-                       </th>
-                          <th>
-                            Delete
-                          </th>
                         </tr>
                       </thead>
                       <tbody>
-                      {% for i in division %}
+                      {% for i in standard %}
                         <tr>
                           <td>{{forloop.counter}}</td>
                           <td>{{i.name}}</td>
-                          <td>{{i.standard}}</td>
-                          <td>{{i.staff}}</td>
-                          <td><form method="post" action="{% url 'division_delete' i.id %}" onsubmit="sub1()">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-danger">
-                          Delete
-                          </button></form></td>
                           </tr>
                           {% endfor %}
 <!--                          <td class="py-1">-->

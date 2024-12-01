@@ -65,13 +65,13 @@
                   {% comment %} Don't have an account? <a href="{% url 'customer_register' %}" class="text-primary">Create</a> {% endcomment %}
                 </div>
               </form>
-              {% if messages %}
+              {% comment %} {% if messages %}
               <ul class="messages">
                 {% for message in messages %}
                   <li class="{{ message.tags }}">{{ message }}</li>
                 {% endfor %}
               </ul>
-            {% endif %}
+            {% endif %} {% endcomment %}
             </div>
           </div>
         </div>
