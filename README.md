@@ -1,8 +1,7 @@
 __Setup__
 __1. Clone the repository__
    ```
-   git clone https://github.com/aswanthsanthosh/Scrapy_Project.git
-   cd Scrapy_Project/
+   git clone https://github.com/aswanthsanthosh/classroom-management.git
    ```
 __2. Activate Virtual Environment__
    
