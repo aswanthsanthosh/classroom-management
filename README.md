@@ -16,5 +16,8 @@ __5. Run Development Server__
    ```
 
 __credentials :__
-  username - admin
+  - username - admin
   password - 12
+
+  - username - staffuser
+  password - staff@123
