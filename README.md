@@ -23,3 +23,6 @@ __credentials :__
 
   - username - staffuser
   password - staff@123
+
+ - username - student2
+ password - Login@4931 
