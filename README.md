@@ -2,12 +2,14 @@ __Setup__
 __1. Clone the repository__
    ```
    git clone https://github.com/aswanthsanthosh/classroom-management.git
+   cd classroom-management
    ```
 __2. Activate Virtual Environment__
    
 for windows :
    ```
    env\Scripts\activate
+   cd classroom_manager
    ```
 __5. Run Development Server__
    use this command to run this django project :
@@ -21,3 +23,6 @@ __credentials :__
 
   - username - staffuser
   password - staff@123
+
+ - username - student2
+ password - Login@4931 
