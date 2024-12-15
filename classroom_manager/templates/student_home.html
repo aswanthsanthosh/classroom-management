@@ -396,18 +396,6 @@
               <div class="badge badge-danger">new</div>
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-              <i class="typcn typcn-document-text menu-icon"></i>
-              <span class="menu-title">STANDARD</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="ui-basic">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="{% url 'standard_view_staff' %}">View</a></li> 
-              </ul>
-            </div>
-          </li>
 <!--          <li class="nav-item">-->
 <!--            <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">-->
 <!--              <i class="typcn typcn-film menu-icon"></i>-->
@@ -421,18 +409,6 @@
 <!--              </ul>-->
 <!--          </li>-->
           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#charts" aria-expanded="false" aria-controls="charts">
-              <i class="typcn typcn-chart-pie-outline menu-icon"></i>
-              <span class="menu-title">DIVISION</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="charts">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="{% url 'division_view_staff' %}">View</a></li>
-              </ul>
-            </div>
-          </li>
-          <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#tables" aria-expanded="false" aria-controls="tables">
               <i class="typcn typcn-th-small-outline menu-icon"></i>
               <span class="menu-title">STAFF</span>
@@ -440,46 +416,33 @@
             </a>
             <div class="collapse" id="tables">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="{% url 'staff_view_for_staff' %}">View</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{% url 'staff_view_for_student' %}">View</a></li>
               </ul>
             </div>
           </li>
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="icons">
-              <i class="typcn typcn-compass menu-icon"></i><span class="menu-title">STUDENTS</span>
+              <i class="typcn typcn-compass menu-icon"></i><span class="menu-title">ATTENDANCE</span>
 <!--              <span class="menu-title">User Details</span>-->
               <i class="menu-arrow"></i>
             </a>
             <div class="collapse" id="icons">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="{% url 'student_register' %}">Add Students</a></li>
-                <li class="nav-item"> <a class="nav-link" href="{% url 'student_view' %}">View Students</a></li>
-              </ul>
-            </div>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#notif" aria-expanded="false" aria-controls="notif">
-              <i class="typcn typcn-mortar-board menu-icon"></i>
-              <span class="menu-title">ATTENDANCE</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="notif">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="{% url 'add_attendance' %}">Mark Attendance</a></li>
-                <li class="nav-item"> <a class="nav-link" href="{% url 'attendance_view_for_staff' %}">View Attendance</a></li>
+                {% comment %} {% comment %} <li class="nav-item"> <a class="nav-link" href="{% url 'student_register' %}">Add Students</a></li> {% endcomment %}
+                <li class="nav-item"> <a class="nav-link" href="{% url 'attendance_view_for_student' request.user.id %}">View Attendance</a></li>
               </ul>
             </div>
           </li>
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
               <i class="typcn typcn-user-add-outline menu-icon"></i>
-              <span class="menu-title">LEAVE REPORT</span>
+              <span class="menu-title">LEAVE</span>
               <i class="menu-arrow"></i>
             </a>
             <div class="collapse" id="auth">
               <ul class="nav flex-column sub-menu">
-                {% comment %} <li class="nav-item"> <a class="nav-link" href="{% url 'add_attendance' %}">Add</a></li> {% endcomment %}
-                <li class="nav-item"> <a class="nav-link" href="{% url 'leave_view_for_staff' request.user.id %}">View</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{% url 'add_leave' %}">Add</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{% url 'leave_view_for_stud' request.user.id %}">View</a></li>
               </ul>
             </div>
           </li>
@@ -491,7 +454,8 @@
             </a>
             <div class="collapse" id="Fee">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="{% url 'complaint_view_for_staff' request.user.id %}">View</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{% url 'add_complaint' %}">Add</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{% url 'complaint_view_for_stud' request.user.id %}">View</a></li>
               </ul>
             </div>
           </li>

@@ -128,9 +128,11 @@ class Leave(models.Model):
         Student, on_delete=models.CASCADE,
         related_name='leave'
     )
-    staff = models.ForeignKey(Staff, 
-                              on_delete=models.CASCADE, 
-                              related_name='leave')
+    staff = models.ForeignKey(
+        Staff, on_delete=models.CASCADE,
+        related_name='leave',
+        null=True, blank=True
+    )
 
 
 COMPLAINT_STATUS = (('open', 'open'),
@@ -153,5 +155,6 @@ class Complaint(models.Model):
     staff = models.ForeignKey(Staff, 
                               on_delete=models.CASCADE, 
                               related_name='complaint')
+    date = models.DateField(auto_now_add=True, null=True, blank=True)
 
     

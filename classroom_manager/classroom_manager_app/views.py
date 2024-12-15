@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from .forms import StandardForm, DivisionForm, StaffForm, CompalaintForm, LeaveForm, LoginForm
-from .models import Standard, Division, Staff, Complaint, Leave, CustomUser
+from .forms import StandardForm, DivisionForm, StaffForm, CompalaintForm, LeaveForm, LoginForm, StudentForm, AttendanceForm
+from .models import Standard, Division, Staff, Complaint, Leave, CustomUser, Student, Attandance
+import datetime
+from django.urls import reverse
 
 # Create your views here.
 
@@ -16,6 +18,10 @@ def admin_home(request):
 def staff_home(request):
     print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
     return render(request, 'staff_home.html')
+
+def student_home(request):
+    print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+    return render(request, 'student_home.html')
 
 def logout_view(request):
     logout(request)
@@ -33,6 +39,8 @@ def loginview(request):
                 return redirect('admin_home')
             if user.user_type == "staff":
                 return redirect('staff_home')
+            if user.user_type == "student":
+                return redirect('student_home')
         else:
             messages.info(request, 'invalid credentials')
     return render(request, 'login.html')
@@ -129,3 +137,171 @@ def division_view_staff(request):
 def staff_view_for_staff(request):
     staff = Staff.objects.all()
     return render(request, 'staff_view_for_staff.html ', {'staff': staff})
+
+def staff_view_for_student(request):
+    staff = Staff.objects.all()
+    return render(request, 'staff_view_for_student.html ', {'staff': staff})
+
+def student_register(request):
+    login_form = LoginForm()
+    staff_form = StudentForm()
+    if request.method == 'POST':
+        login_form = LoginForm(request.POST)
+        staff_form = StudentForm(request.POST)
+        if login_form.is_valid() and staff_form.is_valid():
+            user = login_form.save(commit=False)
+            user.user_type = 'student'
+            user.save()
+            staff = staff_form.save(commit=False)
+            staff.user = user
+            staff.save()
+            messages.info(request, 'Student Registered Successful')
+            return redirect('student_view')
+    return render(request, 'register_student.html', {'login_form': login_form, 'staff_form': staff_form})
+
+def student_view_for_staff(request):
+    staff = Student.objects.all()
+    return render(request, 'student_view_for_staff.html ', {'staff': staff})
+
+now = datetime.datetime.now()
+
+def mark_attendance(request, id):
+    user = Student.objects.get(id=id)
+    add = Attandance.objects.filter(student=user, date=datetime.date.today())
+    if add.exists():
+        messages.info(request, f"{user}'s Today's Attendance is already Marked!")
+        return redirect('add_attendance')
+    else:
+        if request.method == 'POST':
+            status = request.POST.get('status')
+            Attandance(student=user, date=datetime.date.today(), status=status, division=user.division).save()
+            messages.info(request, "Attendance added Succesfully")
+            return redirect('add_attendance')
+        return render(request, 'mark_attendance.html')
+
+
+def add_attendance(request):
+    students = Student.objects.all()
+    return render(request, 'add_attendance.html', {'students': students})
+
+
+def attendance_view_for_student(request, id):
+    print(">>", id)
+    user = request.user
+    attendance = Attandance.objects.filter(student__user=id).order_by('-date')
+    return render(request, 'attendance_view_for_stud.html ', {'attendance': attendance, 'user': user})
+
+
+def add_leave(request):
+    leaveform = LeaveForm()
+    if request.method == 'POST':
+        leaveform = LeaveForm(request.POST)
+        if leaveform.is_valid:
+            leave = leaveform.save(commit=False)
+            student = Student.objects.get(user=request.user)
+            leave.student = student
+            leave.division = student.division
+            leave.save()
+            messages.info(request, 'Leave Added Successful')
+            return redirect(reverse('leave_view_for_stud', kwargs={'id': request.user.id}))
+    return render(request, 'add_leave.html', {'leaveform': leaveform})
+
+
+def leave_view_for_stud(request, id):
+    leave = Leave.objects.filter(student__user=id).order_by('-date')
+    return render(request, 'leave_view_for_stud.html', {'leave': leave})
+
+def leave_delete(request, id):
+    data = Leave.objects.get(id=id)
+    if request.method == 'POST':
+        print("pppppp")
+        data.delete()
+        print("qqqqqqq")
+        return redirect(reverse('leave_view_for_stud', kwargs={'id': request.user.id}))
+    else:
+        return redirect(reverse('leave_view_for_stud', kwargs={'id': request.user.id}))
+    
+
+def add_complaint(request):
+    complaint_form = CompalaintForm()
+    if request.method == 'POST':
+        complaint_form = CompalaintForm(request.POST)
+        if complaint_form.is_valid:
+            complaint = complaint_form.save(commit=False)
+            student = Student.objects.get(user=request.user)
+            complaint.student = student
+            complaint.save()
+            messages.info(request, 'Complaint Added Successful')
+            return redirect(reverse('complaint_view_for_stud', kwargs={'id': request.user.id}))
+    return render(request, 'add_complaint.html', {'complaint_form': complaint_form})
+
+
+def complaint_view_for_stud(request, id):
+    complaint = Complaint.objects.filter(student__user=id).order_by('-date')
+    return render(request, 'complaint_view_for_stud.html', {'complaint': complaint})
+
+def complaint_delete(request, id):
+    data = Complaint.objects.get(id=id)
+    if request.method == 'POST':
+        data.delete()
+        return redirect(reverse('complaint_view_for_stud', kwargs={'id': request.user.id}))
+    else:
+        return redirect(reverse('complaint_view_for_stud', kwargs={'id': request.user.id}))
+    
+def complaint_view_for_staff(request, id):
+    complaint = Complaint.objects.filter(staff__user=id).order_by('-date')
+    return render(request, 'complaint_view_for_staff.html', {'complaint': complaint})
+
+def resolve_complaint(request, id):
+    complaint = Complaint.objects.get(id=id)
+    complaint.status = 'resolved'
+    complaint.save()
+    return redirect(reverse('complaint_view_for_staff', kwargs={'id': request.user.id}))
+
+def leave_view_for_staff(request, id):
+    leave = Leave.objects.filter(staff__user=id).order_by('-date')
+    return render(request, 'leave_view_for_staff.html', {'leave': leave})
+
+def approve_leave(request, id):
+    leave = Leave.objects.get(id=id)
+    leave.status = 'approved'
+    leave.save()
+    return redirect(reverse('leave_view_for_staff', kwargs={'id': request.user.id}))
+
+def reject_leave(request, id):
+    leave = Leave.objects.get(id=id)
+    leave.status = 'rejected'
+    leave.save()
+    return redirect(reverse('leave_view_for_staff', kwargs={'id': request.user.id}))
+
+
+
+def complaint_view_for_admin(request):
+    complaint = Complaint.objects.all().order_by('-date')
+    return render(request, 'complaint_view_for_admin.html', {'complaint': complaint})
+
+def resolve_complaint_admin(request, id):
+    complaint = Complaint.objects.get(id=id)
+    complaint.status = 'resolved'
+    complaint.save()
+    return redirect('complaint_view_for_admin')
+
+def leave_view_for_admin(request):
+    leave = Leave.objects.all().order_by('-date')
+    return render(request, 'leave_view_for_admin.html', {'leave': leave})
+
+def approve_leave_admin(request, id):
+    leave = Leave.objects.get(id=id)
+    leave.status = 'approved'
+    leave.save()
+    return redirect('leave_view_for_admin')
+
+def reject_leave_admin(request, id):
+    leave = Leave.objects.get(id=id)
+    leave.status = 'rejected'
+    leave.save()
+    return redirect('leave_view_for_admin')
+
+def attendance_view_for_staff(request):
+    attendance = Attandance.objects.filter(division__staff__user=request.user).order_by('-date')
+    return render(request, 'attendance_view_for_staff.html', {'attendance': attendance})

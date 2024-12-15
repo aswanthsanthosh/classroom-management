@@ -25,6 +25,42 @@ urlpatterns=[
     path('division_view_staff', views.division_view_staff, name='division_view_staff'),
 
     path('staff_view_for_staff', views.staff_view_for_staff, name='staff_view_for_staff'),
+    path('student_register', views.student_register, name='student_register'),
+    path('student_view', views.student_view_for_staff, name='student_view'),
+    path('add_attendance', views.add_attendance, name='add_attendance'),
+    path('mark_attendance/<int:id>', views.mark_attendance, name='mark_attendance'),
+    # path('view_attendance', views.attendance_view_for_staff, name='view_attendance'),
+
+    path('student_home', views.student_home, name='student_home'),
+    path('staff_view_for_student', views.staff_view_for_student, name='staff_view_for_student'),
+    path('attendance_view_for_student/<int:id>', views.attendance_view_for_student, name='attendance_view_for_student'),
+    path('add_leave', views.add_leave, name='add_leave'),
+    path('leave_view_for_stud/<int:id>', views.leave_view_for_stud, name='leave_view_for_stud'),
+    path('leave_delete/<int:id>', views.leave_delete, name='leave_delete'),
+
+    path('add_complaint', views.add_complaint, name='add_complaint'),
+    path('complaint_view_for_stud/<int:id>', views.complaint_view_for_stud, name='complaint_view_for_stud'),
+    path('complaint_delete/<int:id>', views.complaint_delete, name='complaint_delete'),
+
+    path('complaint_view_for_staff/<int:id>', views.complaint_view_for_staff, name='complaint_view_for_staff'),
+    path('resolve_complaint/<int:id>', views.resolve_complaint, name='resolve_complaint'),
+
+    path('leave_view_for_staff/<int:id>', views.leave_view_for_staff, name='leave_view_for_staff'),
+    path('approve_leave/<int:id>/', views.approve_leave, name='approve_leave'),
+    path('reject_leave/<int:id>/', views.reject_leave, name='reject_leave'),
+    path('attendance_view_for_staff', views.attendance_view_for_staff, name='attendance_view_for_staff'),
+
+
+    path('complaint_view_for_admin', views.complaint_view_for_admin, name='complaint_view_for_admin'),
+    path('resolve_complaint_admin/<int:id>', views.resolve_complaint_admin, name='resolve_complaint_admin'),
+
+    path('leave_view_for_admin', views.leave_view_for_admin, name='leave_view_for_admin'),
+    path('approve_leave_admin/<int:id>/', views.approve_leave_admin, name='approve_leave_admin'),
+    path('reject_leave_admin/<int:id>/', views.reject_leave_admin, name='reject_leave_admin'),
+
+
+
+
     
 
 ]
