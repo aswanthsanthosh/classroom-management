@@ -84,7 +84,7 @@ class Standard(models.Model):
     
 
 class Division(models.Model):
-    name = models.CharField(max_length=100)
+    division = models.CharField(max_length=100)
     standard = models.ForeignKey(Standard, on_delete=models.CASCADE, related_name='division')
     staff = models.ForeignKey(Staff, on_delete=models.CASCADE, related_name='divisions')
 
