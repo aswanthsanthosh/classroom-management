@@ -1,6 +1,31 @@
 {% extends 'student_home.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
+<style>
+  .card-att {
+    width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    margin: 16px auto;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin-left: auto;
+    margin-right: 0;
+  }
+  .name {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 8px 0;
+    color: #333;
+  }
+</style>
+<div class="card-att">
+  <div class="name">Present: {{ p }}</div>
+  <div class="name">Absent: {{ a }}</div>
+</div>
 <div class="col-lg-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
@@ -8,7 +33,6 @@
 <!--                  <p class="card-description">-->
 <!--                    Add class <code>.table-striped</code>-->
 <!--                  </p>-->
-
                   <div class="table-responsive">
                     <table class="table table-striped">
                       <thead>
@@ -26,7 +50,7 @@
                           Present/Absent
                        </th>
                        <th>
-                        Division
+                        Department
                      </th>
                         </tr>
                       </thead>

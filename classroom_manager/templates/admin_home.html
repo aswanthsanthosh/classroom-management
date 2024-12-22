@@ -399,7 +399,7 @@
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
               <i class="typcn typcn-document-text menu-icon"></i>
-              <span class="menu-title">STANDARD</span>
+              <span class="menu-title">SEMESTER</span>
               <i class="menu-arrow"></i>
             </a>
             <div class="collapse" id="ui-basic">
@@ -424,13 +424,26 @@
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#charts" aria-expanded="false" aria-controls="charts">
               <i class="typcn typcn-chart-pie-outline menu-icon"></i>
-              <span class="menu-title">DIVISION</span>
+              <span class="menu-title">DEPARTMENT</span>
               <i class="menu-arrow"></i>
             </a>
             <div class="collapse" id="charts">
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="{% url 'add_division' %}">Add</a></li>
                 <li class="nav-item"> <a class="nav-link" href="{% url 'division_view' %}">View</a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="icons">
+              <i class="typcn typcn-compass menu-icon"></i><span class="menu-title">STUDENTS</span>
+<!--              <span class="menu-title">User Details</span>-->
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="icons">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="{% url 'student_register' %}">Add Students</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{% url 'student_view_admin' %}">View Students</a></li>
               </ul>
             </div>
           </li>

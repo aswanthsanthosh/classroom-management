@@ -89,7 +89,7 @@ class Division(models.Model):
     staff = models.ForeignKey(Staff, on_delete=models.CASCADE, related_name='divisions')
 
     def __str__(self) -> str:
-        return self.name
+        return self.division
 
 ATTENDANCE_STATUS_CHOICES = (('present', 'present'),
                              ('absent', 'absent'))

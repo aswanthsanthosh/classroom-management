@@ -1,10 +1,10 @@
-{% extends 'student_home.html' %}
+{% extends 'admin_home.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
 <div class="col-lg-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Complaint Details Table</h4>
+                  <h4 class="card-title">Staff Details Table</h4>
 <!--                  <p class="card-description">-->
 <!--                    Add class <code>.table-striped</code>-->
 <!--                  </p>-->
@@ -17,35 +17,35 @@
                             Sl No.
                           </th>
                           <th>
-                             Date
+                             Name
                           </th>
                           <th>
-                            Complaint
+                            Contact
                          </th>
                          <th>
-                          Department
+                          Parent Contact
                        </th>
                        <th>
-                        Status
+                        Email
                      </th>
-                          <th>
-                            Delete
-                          </th>
+                     <th>
+                      Department
+                   </th>
+                       {% comment %} <th>
+                        Division
+                     </th> {% endcomment %}
                         </tr>
                       </thead>
                       <tbody>
-                      {% for i in complaint %}
+                      {% for i in staff %}
                         <tr>
                           <td>{{forloop.counter}}</td>
-                          <td>{{i.date}}</td>
-                          <td>{{i.complaint_text}}</td>
+                          <td>{{i.name}}</td>
+                          <td>{{i.contact}}</td>
+                          <td>{{i.parent_contact}}</td>
+                          <td>{{i.email}}</td>
                           <td>{{i.division}}</td>
-                          <td>{{i.status}}</td>
-                          <td><form method="post" action="{% url 'complaint_delete' i.id %}" onsubmit="sub1()">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-danger">
-                          Delete
-                          </button></form></td>
+                          {% comment %} <td>{% if i.divisions.all %}{{ i.divisions }}{% else %}No divisions available{% endif %}</td> {% endcomment %}
                           </tr>
                           {% endfor %}
 <!--                          <td class="py-1">-->

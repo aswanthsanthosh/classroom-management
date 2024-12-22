@@ -156,12 +156,16 @@ def student_register(request):
             staff.user = user
             staff.save()
             messages.info(request, 'Student Registered Successful')
-            return redirect('student_view')
+            return redirect('student_view_admin')
     return render(request, 'register_student.html', {'login_form': login_form, 'staff_form': staff_form})
 
 def student_view_for_staff(request):
     staff = Student.objects.all()
     return render(request, 'student_view_for_staff.html ', {'staff': staff})
+
+def student_view_for_admin(request):
+    staff = Student.objects.all()
+    return render(request, 'student_view_for_admin.html ', {'staff': staff})
 
 now = datetime.datetime.now()
 
@@ -189,7 +193,9 @@ def attendance_view_for_student(request, id):
     print(">>", id)
     user = request.user
     attendance = Attandance.objects.filter(student__user=id).order_by('-date')
-    return render(request, 'attendance_view_for_stud.html ', {'attendance': attendance, 'user': user})
+    p = attendance.filter(status='present').count()
+    a = attendance.filter(status='absent').count()
+    return render(request, 'attendance_view_for_stud.html ', {'attendance': attendance, 'user': user, 'a':a, 'p':p})
 
 
 def add_leave(request):

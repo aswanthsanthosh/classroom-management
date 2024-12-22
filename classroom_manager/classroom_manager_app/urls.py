@@ -27,6 +27,7 @@ urlpatterns=[
     path('staff_view_for_staff', views.staff_view_for_staff, name='staff_view_for_staff'),
     path('student_register', views.student_register, name='student_register'),
     path('student_view', views.student_view_for_staff, name='student_view'),
+    path('student_view_admin', views.student_view_for_admin, name='student_view_admin'),
     path('add_attendance', views.add_attendance, name='add_attendance'),
     path('mark_attendance/<int:id>', views.mark_attendance, name='mark_attendance'),
     # path('view_attendance', views.attendance_view_for_staff, name='view_attendance'),
