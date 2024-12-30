@@ -13,11 +13,18 @@ class StandardForm(forms.ModelForm):
     class Meta:
         model = Standard
         fields = "__all__"
+        labels = {
+            'name': 'Semester',
+        }
 
 class DivisionForm(forms.ModelForm):
     class Meta:
         model = Division
         fields = "__all__"
+        labels = {
+            'division': 'Department',
+            'standard': 'Semester',
+        }
 
 class StaffForm(forms.ModelForm):
     class Meta:
